@@ -38,6 +38,7 @@
   background-color: var(--game-board-border);
   border-radius: var(--border-radius-sm);
   overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .cell {
