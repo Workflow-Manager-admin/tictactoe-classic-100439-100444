@@ -64,7 +64,7 @@
 
 .cell .x-symbol svg,
 .cell .o-symbol svg {
-  animation: symbol-appear var(--transition-normal);
+  animation: symbol-appear 300ms ease;
 }
 
 /* Cell hover state when empty */

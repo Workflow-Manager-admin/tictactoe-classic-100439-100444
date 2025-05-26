@@ -220,7 +220,7 @@ const TicTacToe = () => {
       {renderStatus()}
       
       <div className="game-board">
-        {Array(9).fill(null).map((_, index) => renderCell(index))}
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => renderCell(index))}
       </div>
       
       <div className="controls">
