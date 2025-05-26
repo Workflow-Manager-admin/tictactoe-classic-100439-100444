@@ -124,6 +124,7 @@
   transition: background-color var(--transition-fast), transform var(--transition-fast);
   min-width: 120px;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .button:hover {
