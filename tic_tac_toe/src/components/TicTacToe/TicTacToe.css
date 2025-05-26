@@ -89,6 +89,10 @@
   font-weight: 500;
   height: 30px; /* Fixed height to prevent layout shift */
   text-shadow: 1px 1px 3px var(--status-text-shadow);
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 6px 16px;
+  border-radius: 8px;
+  min-width: 200px;
 }
 
 .status.x-turn {
