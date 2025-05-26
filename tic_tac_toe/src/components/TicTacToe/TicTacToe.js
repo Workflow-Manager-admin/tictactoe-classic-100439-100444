@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TicTacToe.css';
 
 /**
@@ -12,6 +12,18 @@ const TicTacToe = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
   const [gameStatus, setGameStatus] = useState(''); // '', 'winner', or 'draw'
+  const [modalActive, setModalActive] = useState(false);
+  
+  // Effect to show modal when game ends
+  useEffect(() => {
+    if (gameStatus === 'winner' || gameStatus === 'draw') {
+      const timer = setTimeout(() => {
+        setModalActive(true);
+      }, 300);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [gameStatus]);
 
   /**
    * Calculate the winner by checking all possible winning combinations
@@ -41,12 +53,12 @@ const TicTacToe = () => {
   };
 
   /**
-   * Handle a square click to make a move
+   * Handle a cell click to make a move
    * 
-   * @param {number} index - The index of the clicked square
+   * @param {number} index - The index of the clicked cell
    */
   const handleClick = (index) => {
-    // Return if the game is over or the square is already filled
+    // Return if the game is over or the cell is already filled
     if (gameStatus || board[index]) {
       return;
     }
@@ -63,7 +75,7 @@ const TicTacToe = () => {
     if (winner) {
       setGameStatus('winner');
     } else if (!newBoard.includes(null)) {
-      // If all squares are filled and no winner, it's a draw
+      // If all cells are filled and no winner, it's a draw
       setGameStatus('draw');
     } else {
       // Switch turns
@@ -78,66 +90,146 @@ const TicTacToe = () => {
     setBoard(Array(9).fill(null));
     setIsXNext(true);
     setGameStatus('');
+    setModalActive(false);
   };
 
   /**
-   * Render a square button on the game board
+   * Render an X symbol using SVG
    * 
-   * @param {number} index - The index of the square
-   * @returns {JSX.Element} - The rendered square
+   * @returns {JSX.Element} - The rendered X symbol
    */
-  const renderSquare = (index) => {
+  const renderXSymbol = () => {
     return (
-      <button className="square" onClick={() => handleClick(index)}>
-        {board[index]}
-      </button>
+      <div className="x-symbol">
+        <svg viewBox="0 0 100 100">
+          <line x1="20" y1="20" x2="80" y2="80" />
+          <line x1="80" y1="20" x2="20" y2="80" />
+        </svg>
+      </div>
+    );
+  };
+
+  /**
+   * Render an O symbol using SVG
+   * 
+   * @returns {JSX.Element} - The rendered O symbol
+   */
+  const renderOSymbol = () => {
+    return (
+      <div className="o-symbol">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="30" />
+        </svg>
+      </div>
+    );
+  };
+
+  /**
+   * Render a cell on the game board
+   * 
+   * @param {number} index - The index of the cell
+   * @returns {JSX.Element} - The rendered cell
+   */
+  const renderCell = (index) => {
+    const value = board[index];
+    let cellContent = null;
+    let cellClass = "cell";
+    
+    if (value === 'X') {
+      cellContent = renderXSymbol();
+      cellClass += " x";
+    } else if (value === 'O') {
+      cellContent = renderOSymbol();
+      cellClass += " o";
+    }
+    
+    return (
+      <div 
+        key={index}
+        className={cellClass}
+        onClick={() => handleClick(index)}
+        tabIndex="0"
+        aria-label={`Cell ${Math.floor(index / 3) + 1}-${index % 3 + 1}, ${value ? `marked with ${value}` : 'empty'}`}
+        role="button"
+        onKeyPress={(e) => e.key === 'Enter' && handleClick(index)}
+      >
+        {cellContent}
+      </div>
     );
   };
 
   /**
    * Generate status text based on the current game state
    * 
-   * @returns {string} - The current game status text
+   * @returns {JSX.Element} - The current game status element
    */
-  const getStatusText = () => {
+  const renderStatus = () => {
+    let statusText;
+    let statusClass = "status";
+    
     if (gameStatus === 'winner') {
-      return `Winner: ${isXNext ? 'O' : 'X'}`;
+      const winner = isXNext ? 'O' : 'X';
+      statusText = `Player ${winner} wins!`;
+      statusClass += winner === 'X' ? " x-turn" : " o-turn";
     } else if (gameStatus === 'draw') {
-      return 'Game ended in a draw!';
+      statusText = "Game ended in a draw!";
     } else {
-      return `Next player: ${isXNext ? 'X' : 'O'}`;
+      statusText = `Player ${isXNext ? 'X' : 'O'}'s turn`;
+      statusClass += isXNext ? " x-turn" : " o-turn";
     }
+    
+    return (
+      <div className={statusClass} aria-live="polite">
+        {statusText}
+      </div>
+    );
+  };
+  
+  /**
+   * Render the game over modal
+   * 
+   * @returns {JSX.Element} - The game over modal
+   */
+  const renderGameOverModal = () => {
+    let resultMessage;
+    let resultClass = "result-message";
+    
+    if (gameStatus === 'winner') {
+      const winner = isXNext ? 'O' : 'X';
+      resultMessage = `Player ${winner} wins!`;
+      resultClass += winner === 'X' ? " result-x" : " result-o";
+    } else {
+      resultMessage = "Game ended in a draw!";
+      resultClass += " result-draw";
+    }
+    
+    return (
+      <div className={`game-over-modal ${modalActive ? 'active' : ''}`}>
+        <div className="modal-content">
+          <div className={resultClass}>{resultMessage}</div>
+          <button className="button" onClick={resetGame}>Play Again</button>
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className="tictactoe-container">
-      <h2 className="tictactoe-title">Tic Tac Toe</h2>
+    <div className="game-container">
+      <h2 className="game-title">TicTacToe Classic</h2>
       
-      <div className="game-status">
-        {getStatusText()}
-      </div>
+      {renderStatus()}
       
       <div className="game-board">
-        <div className="board-row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
+        {Array(9).fill(null).map((_, index) => renderCell(index))}
       </div>
       
-      <button className="reset-button btn" onClick={resetGame}>
-        Reset Game
-      </button>
+      <div className="controls">
+        <button className="button" onClick={resetGame}>
+          Reset Game
+        </button>
+      </div>
+      
+      {renderGameOverModal()}
     </div>
   );
 };
