@@ -151,7 +151,7 @@ const TicTacToe = () => {
         tabIndex="0"
         aria-label={`Cell ${Math.floor(index / 3) + 1}-${index % 3 + 1}, ${value ? `marked with ${value}` : 'empty'}`}
         role="button"
-        onKeyPress={(e) => e.key === 'Enter' && handleClick(index)}
+        onKeyDown={(e) => e.key === 'Enter' && handleClick(index)}
       >
         {cellContent}
       </div>
