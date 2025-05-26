@@ -74,3 +74,6 @@ ERROR in ./src/components/TicTacToe/TicTacToe.css (./node_modules/css-loader/dis
 Module not found: Error: Can't resolve '%PUBLIC_URL%/images/20250526_055535_tic-tac-toe-game-2.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
 
 webpack compiled with 1 error
+Compiling...
+Compiled successfully!
+webpack compiled successfully

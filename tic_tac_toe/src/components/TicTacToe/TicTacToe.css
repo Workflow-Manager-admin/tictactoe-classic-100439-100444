@@ -7,7 +7,7 @@
   width: 100%;
   margin: 0 auto;
   margin-bottom: var(--spacing-xl);
-  background-image: url('%PUBLIC_URL%/images/20250526_055535_tic-tac-toe-game-2.png');
+  background-image: var(--tictactoe-bg-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
