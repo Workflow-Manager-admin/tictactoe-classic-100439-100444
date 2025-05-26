@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './TicTacToe.css';
+import backgroundImage from './tic-tac-toe-background.png';
 
 /**
  * TicTacToe component - Implements a classic Tic Tac Toe game
@@ -213,8 +214,16 @@ const TicTacToe = () => {
     );
   };
 
+  // Create a style object with the background image URL
+  const gameContainerStyle = {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  };
+
   return (
-    <div className="game-container">
+    <div className="game-container" style={gameContainerStyle}>
       <h2 className="game-title">TicTacToe Classic</h2>
       
       {renderStatus()}

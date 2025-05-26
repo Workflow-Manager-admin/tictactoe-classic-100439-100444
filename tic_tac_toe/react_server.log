@@ -77,3 +77,26 @@ webpack compiled with 1 error
 Compiling...
 Compiled successfully!
 webpack compiled successfully
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve './tic-tac-toe-background.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
+WARNING in [eslint] 
+src/components/TicTacToe/TicTacToe.js
+  Line 3:8:  'backgroundImage' is defined but never used  no-unused-vars
+
+ERROR in ./src/components/TicTacToe/TicTacToe.js 7:0-59
+Module not found: Error: Can't resolve './tic-tac-toe-background.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
+
+webpack compiled with 1 error and 1 warning
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve './tic-tac-toe-background.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
+ERROR in ./src/components/TicTacToe/TicTacToe.js 7:0-59
+Module not found: Error: Can't resolve './tic-tac-toe-background.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
+
+webpack compiled with 1 error
+Compiling...
+Compiled successfully!
+webpack compiled successfully
