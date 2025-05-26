@@ -1,84 +1,232 @@
-/* Container styling for the game */
-.tictactoe-container {
+/* TicTacToe Game Container */
+.game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 500px;
+  width: 100%;
   margin: 0 auto;
-  max-width: 400px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: var(--spacing-xl);
 }
 
-.tictactoe-title {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: var(--text-color);
-}
-
-/* Status display for showing current player or winner */
-.game-status {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  font-weight: 500;
-  color: var(--text-secondary);
+.game-title {
+  font-family: var(--font-family-title);
+  font-weight: 700;
+  font-size: 28px;
   text-align: center;
-  min-height: 30px;
+  margin-bottom: var(--spacing-md);
 }
 
-/* Game board styling */
+/* Game Board */
 .game-board {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 450px;
+  background-color: var(--game-board-border);
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
 }
 
-.board-row {
+.cell {
   display: flex;
-}
-
-/* Square button styling */
-.square {
-  width: 80px;
-  height: 80px;
-  background-color: var(--kavia-dark);
-  border: 2px solid var(--border-color);
-  margin: 2px;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--text-color);
+  justify-content: center;
+  background-color: var(--grid-background);
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 64px;
+  font-weight: bold;
+  transition: background-color var(--transition-fast);
 }
 
-.square:hover:not(:disabled) {
+.cell.x {
+  color: var(--x-symbol);
+}
+
+.cell.o {
+  color: var(--o-symbol);
+}
+
+/* Animation for symbol appearance */
+@keyframes symbol-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cell .x-symbol svg,
+.cell .o-symbol svg {
+  animation: symbol-appear var(--transition-normal);
+}
+
+/* Cell hover state when empty */
+.cell:not(.x):not(.o):hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.square:active {
-  transform: scale(0.98);
+/* Status Display */
+.status {
+  margin: var(--spacing-md) 0;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 500;
+  height: 30px; /* Fixed height to prevent layout shift */
+  text-shadow: 1px 1px 3px var(--status-text-shadow);
 }
 
-/* X player style */
-.square:nth-child(odd):not(:empty) {
-  color: var(--kavia-orange);
+.status.x-turn {
+  color: var(--x-symbol);
 }
 
-/* O player style */
-.square:nth-child(even):not(:empty) {
-  color: #4dc4ff;
+.status.o-turn {
+  color: var(--o-symbol);
 }
 
-.reset-button {
-  margin-top: 15px;
-  background-color: var(--kavia-orange);
-  transition: background-color 0.3s;
+/* Game Controls */
+.controls {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
-.reset-button:hover {
-  background-color: #FF8B4D;
+.button {
+  background-color: var(--button-background);
+  color: var(--button-text);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: 10px 20px;
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  min-width: 120px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: var(--button-hover);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Game Pieces (SVG Implementation) */
+.x-symbol svg {
+  width: 70%;
+  height: 70%;
+  stroke: var(--x-symbol);
+  stroke-width: 10%;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.o-symbol svg {
+  width: 70%;
+  height: 70%;
+  stroke: var(--o-symbol);
+  stroke-width: 10%;
+  fill: none;
+}
+
+/* Game Over Modal */
+.game-over-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.game-over-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: var(--panel-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  max-width: 300px;
+  width: 100%;
+  transform: translateY(20px);
+  transition: transform var(--transition-normal);
+}
+
+.game-over-modal.active .modal-content {
+  transform: translateY(0);
+}
+
+.result-message {
+  font-size: 24px;
+  margin-bottom: var(--spacing-md);
+}
+
+.result-x {
+  color: var(--x-symbol);
+}
+
+.result-o {
+  color: var(--o-symbol);
+}
+
+.result-draw {
+  color: var(--text-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .game-title {
+    font-size: 24px;
+  }
+  
+  .status {
+    font-size: 18px;
+  }
+  
+  .cell {
+    font-size: 50px;
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .game-container {
+    padding: var(--spacing-lg);
+  }
+  
+  .game-board {
+    gap: 3px;
+  }
 }
