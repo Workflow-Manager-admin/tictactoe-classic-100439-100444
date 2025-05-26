@@ -26,3 +26,11 @@ ERROR in ./src/components/TicTacToe/TicTacToe.css (./node_modules/css-loader/dis
 Module not found: Error: Can't resolve '/images/20250526_055535_tic-tac-toe-game-2.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
 
 webpack compiled with 1 error
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve '/images/20250526_055535_tic-tac-toe-game-2.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
+ERROR in ./src/components/TicTacToe/TicTacToe.css (./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_modules/source-map-loader/dist/cjs.js!./src/components/TicTacToe/TicTacToe.css) 5:36-110
+Module not found: Error: Can't resolve '/images/20250526_055535_tic-tac-toe-game-2.png' in '/home/kavia/workspace/code-generation/tictactoe-classic-100439-100444/tic_tac_toe/src/components/TicTacToe'
+
+webpack compiled with 1 error
