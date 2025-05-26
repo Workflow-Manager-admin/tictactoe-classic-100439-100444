@@ -1,353 +1,181 @@
-# TicTacToe Classic Style Guide
+# Tic Tac Toe Game - Technical Style Guide
 
-This document provides technical specifications for implementing the TicTacToe Classic UI.
+## Color Palette
 
-## CSS Variables
+### Primary Colors
+- `--primary-bg`: #FFFFFF (White background)
+- `--primary-text`: #333333 (Dark gray text)
+- `--accent-x`: #FF5252 (Red for X player)
+- `--accent-o`: #2196F3 (Blue for O player)
 
-```css
-:root {
-  /* Colors */
-  --primary-background: #121212;
-  --game-board-border: #ffffff;
-  --grid-background: #292929;
-  --x-symbol: #4a90e2;
-  --o-symbol: #e6594e;
-  --text-primary: #ffffff;
-  --text-secondary: #e0e0e0;
-  --button-background: #3a3a3a;
-  --button-hover: #4a4a4a;
-  --button-text: #ffffff;
-  --status-text-shadow: rgba(0, 0, 0, 0.5);
-  --panel-background: rgba(41, 41, 41, 0.9);
-  
-  /* Spacing */
-  --spacing-xs: 8px;
-  --spacing-sm: 16px;
-  --spacing-md: 24px;
-  --spacing-lg: 32px;
-  --spacing-xl: 48px;
-  
-  /* Typography */
-  --font-family-primary: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  --font-family-title: 'Montserrat', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
-  /* Border Radius */
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  
-  /* Transition */
-  --transition-fast: 150ms ease;
-  --transition-normal: 300ms ease;
-}
-```
+### Secondary Colors
+- `--grid-lines`: #CCCCCC (Light gray for grid lines)
+- `--hover-bg`: #F5F5F5 (Very light gray for hover states)
+- `--win-highlight`: #4CAF50 (Green for win highlighting)
+- `--draw-color`: #9E9E9E (Medium gray for draw state)
 
-## Base Layout
+### UI Element Colors
+- `--button-bg`: #E0E0E0 (Light gray button background)
+- `--button-hover`: #D0D0D0 (Slightly darker button hover)
+- `--button-text`: #333333 (Dark text on buttons)
+- `--shadow-color`: rgba(0, 0, 0, 0.1) (Subtle shadow)
 
-```css
-body {
-  font-family: var(--font-family-primary);
-  background-color: var(--primary-background);
-  color: var(--text-primary);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: var(--spacing-md);
-}
+## Typography
 
-.game-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
-}
+### Font Families
+- **Primary Font**: 'Roboto', 'Helvetica Neue', Arial, sans-serif
+- **Display Font** (for game title): 'Poppins', 'Roboto', sans-serif
+- **Monospace Font** (alternative for markers): 'Roboto Mono', monospace
 
-.game-title {
-  font-family: var(--font-family-title);
-  font-weight: 700;
-  font-size: 28px;
-  text-align: center;
-  margin-bottom: var(--spacing-md);
-}
-```
+### Font Sizes
+- Game Title: 28px (desktop), 24px (mobile)
+- Subtitle/Tagline: 16px
+- Game Status: 18px (desktop), 16px (mobile)
+- Button Text: 16px
+- X/O Markers: Dynamic sizing based on cell dimensions (approximately 60% of cell width)
 
-## Game Board
+### Font Weights
+- Game Title: 700 (Bold)
+- Status Text: 400 (Regular)
+- Button Text: 500 (Medium)
+- X/O Markers: 700 (Bold)
 
-```css
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 2px;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  max-width: 450px;
-  background-color: var(--game-board-border);
-  border-radius: var(--border-radius-sm);
-  overflow: hidden;
-}
+### Letter Spacing
+- Game Title: 0.05em
+- Button Text: 0.03em
 
-.cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--grid-background);
-  cursor: pointer;
-  font-size: 64px;
-  font-weight: bold;
-  transition: background-color var(--transition-fast);
-}
+## Spacing System
 
-.cell.x {
-  color: var(--x-symbol);
-}
+### Base Unit
+- Base spacing unit: 8px
 
-.cell.o {
-  color: var(--o-symbol);
-}
+### Margins & Padding
+- Container padding: 16px (mobile), 24px (tablet), 32px (desktop)
+- Game board outer margin: 24px top, 16px bottom
+- Cell padding: 8px (for marker placement)
+- Button padding: 8px 16px
 
-/* Animation for symbol appearance */
-@keyframes symbol-appear {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+### Grid Specifications
+- Grid gap: 8px (mobile), 12px (desktop)
+- Cell dimensions: Equal width and height, responsive to viewport
+- Minimum cell size: 80px × 80px (desktop), 64px × 64px (mobile)
+- Maximum cell size: 120px × 120px
 
-.cell.x::before,
-.cell.o::before {
-  animation: symbol-appear var(--transition-normal);
-}
+## Layout
 
-/* Cell hover state when empty */
-.cell:not(.x):not(.o):hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-```
+### Container
+- Max width: 500px
+- Centered in viewport
+- 16px minimum margin on all sides
 
-## Status Display
+### Grid Layout
+- CSS Grid: 3×3 with equal column and row dimensions
+- Gap: 8px between cells
+- Line thickness: 3px solid var(--grid-lines)
 
-```css
-.status {
-  margin: var(--spacing-md) 0;
-  font-size: 20px;
-  text-align: center;
-  font-weight: 500;
-  height: 30px; /* Fixed height to prevent layout shift */
-  text-shadow: 1px 1px 3px var(--status-text-shadow);
-}
+### Positioning
+- Primary layout: Flex column for vertical stacking
+- Board positioning: Centered horizontally
+- Status and controls: Centered below board
 
-.status.x-turn {
-  color: var(--x-symbol);
-}
+## Navigation & Controls
 
-.status.o-turn {
-  color: var(--o-symbol);
-}
-```
+### Button Styles
+- Height: 40px
+- Border-radius: 8px
+- Transition: 0.2s ease for hover/active states
+- Box-shadow: 0 2px 4px var(--shadow-color)
+- Hover effect: Slight darkening and shadow increase
 
-## Game Controls
+## Interactive Elements
 
-```css
-.controls {
-  display: flex;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-md);
-}
+### Game Cell States
+1. **Empty Cell**
+   - Background: var(--primary-bg)
+   - Border: 3px solid var(--grid-lines)
+   - Cursor: pointer
 
-.button {
-  background-color: var(--button-background);
-  color: var(--button-text);
-  border: none;
-  border-radius: var(--border-radius-sm);
-  padding: 10px 20px;
-  font-family: var(--font-family-primary);
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
-  min-width: 120px;
-  text-align: center;
-}
+2. **Hover State** (empty cells only)
+   - Background: var(--hover-bg)
+   - Transition: background-color 0.15s ease
 
-.button:hover {
-  background-color: var(--button-hover);
-}
+3. **X Cell**
+   - Content: "X" character or custom SVG
+   - Color: var(--accent-x)
+   - Centered in cell
 
-.button:active {
-  transform: scale(0.97);
-}
+4. **O Cell**
+   - Content: "O" character or custom SVG
+   - Color: var(--accent-o)
+   - Centered in cell
 
-.button:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.5);
-  outline-offset: 2px;
-}
-```
+5. **Win Highlighted Cell**
+   - Border or background: Adjusted to var(--win-highlight)
+   - Possible animation: Pulse or glow effect
 
-## Game Pieces (SVG Recommended Implementation)
+### Button States
+1. **Default**
+   - Background: var(--button-bg)
+   - Color: var(--button-text)
 
-```css
-/* For SVG implementation */
-.x-symbol svg {
-  width: 70%;
-  height: 70%;
-  stroke: var(--x-symbol);
-  stroke-width: 10%;
-  stroke-linecap: round;
-  fill: none;
-}
+2. **Hover**
+   - Background: var(--button-hover)
+   - Cursor: pointer
 
-.o-symbol svg {
-  width: 70%;
-  height: 70%;
-  stroke: var(--o-symbol);
-  stroke-width: 10%;
-  fill: none;
-}
-```
+3. **Active/Pressed**
+   - Transform: scale(0.98)
+   - Box-shadow: 0 1px 2px var(--shadow-color)
 
-```html
-<!-- SVG Templates -->
-<template id="x-template">
-  <svg viewBox="0 0 100 100">
-    <line x1="20" y1="20" x2="80" y2="80" />
-    <line x1="80" y1="20" x2="20" y2="80" />
-  </svg>
-</template>
+## Animations & Transitions
 
-<template id="o-template">
-  <svg viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="30" />
-  </svg>
-</template>
-```
+### Timing
+- Fast transitions: 150-200ms
+- Medium transitions: 200-300ms
+- Slow animations: 400-500ms
 
-## Game Over Modal
+### Animation Types
+1. **Marker Placement**: Fade in or scale up when X or O is placed
+2. **Win Detection**: Highlight winning row/column/diagonal with color change
+3. **Reset/New Game**: Quick fade transition for board reset
 
-```css
-.game-over-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 10;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--transition-normal), visibility var(--transition-normal);
-}
+### Easing Functions
+- Default transitions: ease or ease-out
+- Emphasis animations: cubic-bezier(0.175, 0.885, 0.32, 1.275)
 
-.game-over-modal.active {
-  opacity: 1;
-  visibility: visible;
-}
+## Responsive Breakpoints
 
-.modal-content {
-  background-color: var(--panel-background);
-  padding: var(--spacing-lg);
-  border-radius: var(--border-radius-md);
-  text-align: center;
-  max-width: 300px;
-  width: 100%;
-  transform: translateY(20px);
-  transition: transform var(--transition-normal);
-}
+- **Small Mobile**: < 375px
+  - Cell size: ~64px
+  - Font sizes reduced by 10%
+  - Compact spacing
 
-.game-over-modal.active .modal-content {
-  transform: translateY(0);
-}
+- **Mobile**: 376px - 767px
+  - Cell size: ~80px
+  - Standard mobile font sizes
+  - Standard spacing
 
-.result-message {
-  font-size: 24px;
-  margin-bottom: var(--spacing-md);
-}
+- **Tablet**: 768px - 1023px
+  - Cell size: ~100px
+  - Increased spacing between elements
 
-.result-x {
-  color: var(--x-symbol);
-}
+- **Desktop**: > 1024px
+  - Cell size: 100-120px
+  - Full spacing system
+  - Enhanced hover states
 
-.result-o {
-  color: var(--o-symbol);
-}
+## Accessibility Guidelines
 
-.result-draw {
-  color: var(--text-primary);
-}
-```
+- Contrast ratio minimum: 4.5:1 for text, 3:1 for UI elements
+- Focus indicators: 2px solid outline for keyboard navigation
+- Touch targets: Minimum 44×44px for all interactive elements
+- Screen reader text: Status changes announced via ARIA live regions
+- Keyboard navigation: Full support for tab navigation and space/enter activation
 
-## Responsive Design
+## Technical Implementation Notes
 
-```css
-@media (max-width: 480px) {
-  .game-title {
-    font-size: 24px;
-  }
-  
-  .status {
-    font-size: 18px;
-  }
-  
-  .cell {
-    font-size: 50px;
-  }
-  
-  .controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .button {
-    width: 100%;
-  }
-}
-
-@media (min-width: 768px) {
-  .game-container {
-    padding: var(--spacing-lg);
-  }
-  
-  .game-board {
-    gap: 3px;
-  }
-}
-```
-
-## JavaScript Animation Options
-
-For implementing the animations with JavaScript, consider these timing values:
-
-```javascript
-const animations = {
-  symbolAppear: 300, // ms
-  winHighlight: 500, // ms
-  boardReset: 200, // ms
-  modalFade: 300, // ms
-};
-```
-
-## Accessibility
-
-- Ensure all interactive elements have proper focus states
-- Use appropriate ARIA labels for game status
-- Ensure sufficient color contrast (WCAG AA compliance)
-- Consider keyboard navigation between cells
-- Example aria attributes:
-
-```html
-<div class="cell" tabindex="0" aria-label="Cell 1-1, empty" role="button"></div>
-<div class="cell x" aria-label="Cell 1-2, marked with X" role="button"></div>
-<div class="status" aria-live="polite">Player X's turn</div>
-```
+- Use CSS custom properties (variables) for consistent theming
+- Implement responsive grid using CSS Grid layout
+- Use flexbox for vertical element stacking
+- Consider SVG for X and O markers for crisp rendering at all sizes
+- Use media queries to adjust sizes and spacing at different breakpoints
+- Implement game logic separate from UI rendering for clean architecture
